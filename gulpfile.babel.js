@@ -78,10 +78,10 @@ gulp.task('build', ['styles', 'scripts', 'images', 'fonts'], () => {
         minifyJS: true, //压缩页面里的JS
         minifyCSS: true //压缩页面里的CSS
     }
-    return gulp.src('app/*.html')
+    return gulp.src('dist/**/*')
         .pipe($.if('*.js', $.uglify()))
         .pipe($.if('*.css', $.cssnano()))
-        .pipe(rev()) //为引用添加版本号
+        .pipe(rev()) //为引用添加版本号4
         .pipe($.if('*.html', $.htmlmin(options)))
         .pipe(gulp.dest('dist'))
 });

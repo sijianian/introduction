@@ -2,7 +2,7 @@ requirejs.config({
     baseUrl: 'scripts',
     paths: {
         'jquery': 'jquery',
-        'fullpage': 'fullpage',
+        'fullpage': 'fullPage',
         'materialize': 'materialize'
 
     },
