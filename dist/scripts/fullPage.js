@@ -1,2 +1,985 @@
-"use strict";function FullPage(e){function t(e,t,n,s){this.cx=3*e,this.bx=3*(n-e)-this.cx,this.ax=1-this.cx-this.bx,this.cy=3*t,this.by=3*(s-t)-this.cy,this.ay=1-this.cy-this.by}var n,s,a,r,i,o,c,u,l,f,m,d,v,p,h,x,g,w=document.getElementById(e.id),y=w.children,T=y.length,b=T,C=e.slideTime||800,D=e.effect||{},X=e.start||0,Y={},E={},k={},O=[],M=[],L=[],N=[],A=" ",Z=null,S=!1,I=!1;if(y&&1!==T){for(e.mode&&(I=e.mode.indexOf("nav:")!==-1,N=e.mode.split(","),n=N.length),r=0;r<T;r++)O.push(y[r].style),M.push(+y[r].getAttribute("data-step")||0),L.push(0);if(Y={addEventListener:!!window.addEventListener,gravity:!!window.DeviceOrientationEvent,touch:"ontouchstart"in window||window.DocumentTouch&&document instanceof DocumentTouch,version:function(){var e,t=navigator.userAgent,n=t.indexOf("Android");return i=t.indexOf("QQBrowser")!==-1?200:0,n!==-1&&(e=t.substring(n+7,n+11).replace(" ","")),e||0}(),cssCore:function(e){switch(!0){case""===e.webkitTransition:return"webkit";case""===e.MozTransition:return"Moz";case""===e.msTransition:return"ms";case""===e.OTransition:return"O";default:return""}}(document.createElement("Chriswang").style)},t.prototype={epsilon:.01,sampleCurveX:function(e){return((this.ax*e+this.bx)*e+this.cx)*e},sampleCurveY:function(e){return((this.ay*e+this.by)*e+this.cy)*e},sampleCurveDerivativeX:function(e){return(3*this.ax*e+2*this.bx)*e+this.cx},solveCurveX:function(e,t){var n,s,a,r,i,o;for(a=e,o=0;o<8;o++){if(r=this.sampleCurveX(a)-e,Math.abs(r)<t)return a;if(i=this.sampleCurveDerivativeX(a),Math.abs(i)<t)break;a-=r/i}if(n=0,s=1,a=e,a<n)return n;if(a>s)return s;for(;n<s;){if(r=this.sampleCurveX(a),Math.abs(r-e)<t)return a;e>r?n=a:s=a,a=.5*(s-n)+n}return a},solve:function(e,t){return this.sampleCurveY(this.solveCurveX(e,t))}},o=function(){E={X:document.documentElement.clientWidth||window.innerWidth,Y:document.documentElement.clientHeight||window.innerHeight},w.style.height=E.Y+"px"},c=function(e,t,n,s){k.A=e,k.B=t,k.C=n,k.D=s},"string"==typeof e.easing)switch(e.easing){case"ease":c(.25,.1,.25,1);break;case"linear":c(0,0,1,1);break;case"ease-in":c(.42,0,1,1);break;case"ease-out":c(0,0,.58,1);break;case"ease-in-out":c(.42,0,.58,1)}else c(e.easing[0],e.easing[1],e.easing[2],e.easing[3]);if(""!==Y.cssCore){for(;b--;)O[b][Y.cssCore+"TransitionTimingFunction"]="cubic-bezier("+k.A+","+k.B+","+k.C+","+k.D+")";u=function(e,t,n,s){var a=e.style,r="translate("+t+"px,"+n+"px) translateZ(0)",i=arguments[4];i.scale&&(r+=0===s?" scale("+i.scale[0]+")":" scale("+i.scale[1]+")"),i.rotate&&(r+=0===s?" rotate("+i.rotate[0]+"deg)":" rotate("+i.rotate[1]+"deg)"),a[Y.cssCore+"TransformOrigin"]="50% 50%",a[Y.cssCore+"Transform"]=r}}else a=new t(k.A,k.B,k.C,k.D),u=function(e,n,s,r){var i,o=e.currentStyle,c=e.style,u=parseInt(c.left||o.left,10),l=parseInt(c.top||o.top,10),f=n-u,m=s-l,d=+new Date,v=d+r,p=0,h=D.opacity;clearInterval(Z),Z=setInterval(function(){var e;+new Date>v?(e=h?"left:"+n+"px;top:"+s+"px;filter:alpha(opacity="+100*h[1]+");":"left:"+n+"px;top:"+s+"px;",clearInterval(Z)):(i=v-new Date,p=i/r,p=a.solve(1-p,t.prototype.epsilon),e="left:"+(u+f*p)+"px;top:"+(l+m*p)+"px;",h&&(e+="filter:alpha(opacity="+~~(100*(h[1]*p-h[0]*(1-p)))+");")),c.cssText=e},13)};for(l={transform:function(e,t,n){var s=0,a=""!==Y.cssCore||"none"!==e.translate&&e.translate?i:-50;switch(e.translate){case"Y":s=n>t?E.Y:-E.Y,u(y[n],0,s,0,e);break;case"X":s=n>t?E.X:-E.X,u(y[n],s,0,0,e);break;case"XY":s={X:n>t?E.X:-E.X,Y:n>t?E.Y:-E.Y},u(y[n],s.X,s.Y,0,e);break;default:u(y[n],0,0,0,e)}setTimeout(function(){u(y[n],0,0,C,e)},a+50)},opacity:function(e,t,n){var s=y[n].style;s.opacity=e[0],setTimeout(function(){s.opacity=e[1]},70)}},m=Y.addEventListener&&Y.touch?navigator.userAgent.indexOf("Firefox")?function(e,t){e.addEventListener("click",t,!1)}:function(e,t){e.addEventListener("touchstart",t,!1),arguments[2]&&e.addEventListener("touchmove",function(e){e.preventDefault()},!1)}:function(e,t){e.onclick=t},v=function(e,t,n){var s,a=e.className,r=[];if(a.indexOf(t)!==-1){for(r=a.split(A),s=r.length;s--;)r[s]===t&&(n===A||""===n?r.splice(s,1):r[s]=n);r.length?e.className=r.join(A):(e.removeAttribute("class"),e.removeAttribute("className"))}},I&&(x=function(e,t){var n=s[t].className;v(s[e],"active",A),s[t].className=""===n?"active":n+" active"}),e.continuous&&(p=function(e){var t=T;if(arguments[1])if(e>=T)for(;t--;)L[t]=0;else if(e<0)for(;t--;)L[t]=M[t];return(T+e%T)%T}),f=function(e){var t=L[X],n=t+e;return!(n>=0&&n<=M[X])||(0===n?(v(y[X],"step1",""),L[X]=n,!1):1===n&&0===t?(y[X].className+=" step1",L[X]=n,!1):(v(y[X],"step"+t,"step"+n),L[X]=n,!1))},d=function(){var e=y[X].getAttribute("data-step-restart");null!=e&&(e=+e>M[X]?M[X]:+e,0===e?v(y[X],"step"+L[X],""):v(y[X],"step"+L[X],"step"+e),L[X]=e)},h=function(t){var n,s,a=function(e){return e.indexOf("Mac OS")!==-1}(navigator.userAgent),r=i;if(!(e.beforeChange&&"stop"===e.beforeChange(X,y[X])||S||t===X)){if(e.continuous)t=p(t,1);else if(t>=T&&L[X]>=M[X]||t<0&&0===L[X])return;if(S=!0,!arguments[1]&&!f(t-X))return setTimeout(function(){S=!1},C);for(s in D)l[s](D[s],X,t);r+=""===Y.cssCore?20:0,n=X,X=t,I&&x(n,X),setTimeout(function(){y[t].className+=" slide"},r),setTimeout(function(){O[t][Y.cssCore+"TransitionDuration"]=C+"ms"},20),setTimeout(function(){d(),v(y[n],"current",""),v(y[X],"slide","current"),e.callback&&e.callback(X,y[X]),a?setTimeout(function(){S=!1},500):S=!1},C+i+120)}},o(),r=y[X].className,y[X].className=r.indexOf("current")!==-1?r:r+" current",Y.addEventListener?window.addEventListener("resize",o,!1):window.onresize=o;n--;)!function(t){switch(!0){case"wheel"===t:g=function(e){var t;e=e||window.event,e.preventDefault?e.preventDefault():e.returnValue=!1,S||(t=-e.wheelDelta||e.detail,t=t<0?-1:1,h(X+t))},Y.addEventListener&&document.addEventListener("DOMMouseScroll",g,!1),window.onmousewheel=document.onmousewheel=g;break;case"touch"===t:if(!Y.addEventListener)break;!function(){var t,n,s,a,r,i,o,c,u=D.transform.scale[0],l=D.transform.scale[1]-u,m=D.transform.rotate[0],h=D.transform.rotate[1]-m,g=D.opacity[0],b=D.opacity[1]-g,k={},N={},A={},Z=!1,P=navigator.userAgent.indexOf("Windows Phone")!==-1;o=!Y.touch&&P?window.navigator.msPointerEnabled?{start:"MSPointerDown",move:"MSPointerMove",end:"MSPointerUp"}:{start:"pointerDown",move:"pointerMove",end:"pointerUp"}:{start:"touchstart",move:"touchmove",end:"touchend"},o&&(document.body.ontouchmove=function(e){e.preventDefault?e.preventDefault():e.returnValue=!1},"Y"===D.transform.translate?(s=function(){var s=X-1,a=X+1;e.continuous&&(s=p(s),a=p(a)),t=O[s],n=O[a],t&&(t[Y.cssCore+"TransitionDuration"]="0ms",t[Y.cssCore+"Transform"]="translate(0,-"+E.Y+"px) translateZ(0)",t[Y.cssCore+"TransformOrigin"]="50% 100%",y[s].className+=" swipe"),n&&(n[Y.cssCore+"TransitionDuration"]="0ms",n[Y.cssCore+"Transform"]="translate(0,"+E.Y+"px) translateZ(0)",n[Y.cssCore+"TransformOrigin"]="50% 0%",y[a].className+=" swipe")},i=function(e){var s=Math.abs(e.y/E.Y),a=" scale("+~~(100*(u+l*s))/100+") rotate("+~~(m+h*s)+"deg)";t&&e.y>0&&(t.opacity=~~(100*(g+b*s))/100,t[Y.cssCore+"Transform"]="translate(0,"+~~(e.y-E.Y)+"px) translateZ(0)"+a),n&&e.y<0&&(n.opacity=~~(100*(g+b*s))/100,n[Y.cssCore+"Transform"]="translate(0,"+~~(E.Y+e.y)+"px) translateZ(0)"+a)},a=function(t,n){var s=C>>1,a=X+n;e.continuous&&(a=p(a)),v(y[a],"swipe","slide"),t.opacity=1,t[Y.cssCore+"TransitionDuration"]=s+"ms",t[Y.cssCore+"Transform"]="translate(0,"+n*E.Y+"px) translateZ(0)",setTimeout(function(){v(y[a],"slide",""),setTimeout(function(){S=!1},50)},s)},r=function(t,n){var s,a,r=X+n,i=~~(C/1.5);return e.continuous?(r=p(r),s=y[p(X-n)],a=!0):s=y[X-n],s&&v(s,"swipe",""),!a&&r<0||r>T-1?void setTimeout(function(){S=!1},50):(I&&x(X,r),t.opacity=1,v(y[r],"swipe","slide"),t[Y.cssCore+"TransitionDuration"]=i+"ms",t[Y.cssCore+"Transform"]="translate(0,0) translateZ(0)",void setTimeout(function(){d(),v(y[X],"current",""),v(y[r],"slide","current"),X=r,e.callback&&e.callback(X,y[X]),setTimeout(function(){S=!1},50)},i))}):(s=function(){var s=X-1,a=X+1;e.continuous&&(s=p(s),a=p(a)),t=O[s],n=O[a],t&&(t[Y.cssCore+"TransitionDuration"]="0ms",t[Y.cssCore+"Transform"]="translate(-"+E.X+"px,0) translateZ(0)",t[Y.cssCore+"TransformOrigin"]="100% 50%",y[s].className+=" swipe"),n&&(n[Y.cssCore+"TransitionDuration"]="0ms",n[Y.cssCore+"Transform"]="translate("+E.X+"px,0) translateZ(0)",n[Y.cssCore+"TransformOrigin"]="0 50%",y[a].className+=" swipe")},i=function(e){var s=Math.abs(e.x/E.X),a=" scale("+~~(100*(u+l*s))/100+") rotate("+~~(m+h*s)+"deg)";t&&e.x>0&&(t.opacity=~~(100*(g+b*s))/100,t[Y.cssCore+"Transform"]="translate("+~~(e.x-E.X)+"px,0) translateZ(0)"+a),n&&e.x<0&&(n.opacity=~~(100*(g+b*s))/100,n[Y.cssCore+"Transform"]="translate("+~~(E.X+e.x)+"px,0) translateZ(0)"+a)},a=function(t,n){var s=C>>1,a=X+n;e.continuous&&(a=p(a)),v(y[a],"swipe","slide"),t.opacity=1,t[Y.cssCore+"TransitionDuration"]=s+"ms",t[Y.cssCore+"Transform"]="translate("+n*E.X+"px,0) translateZ(0)",setTimeout(function(){v(y[a],"slide",""),setTimeout(function(){S=!1},50)},s)},r=function(t,n){var s,a,r=X+n,i=~~(C/1.5);return e.continuous?(r=p(r),s=y[p(X-n)],a=!0):s=y[X-n],s&&v(s,"swipe",""),!a&&r<0||r>T-1?void setTimeout(function(){S=!1},50):(I&&x(X,r),v(y[r],"swipe","slide"),t.opacity=1,t[Y.cssCore+"TransitionDuration"]=i+"ms",t[Y.cssCore+"Transform"]="translate(0,0) translateZ(0)",void setTimeout(function(){d(),v(y[X],"current",""),v(y[r],"slide","current"),X=r,e.callback&&e.callback(X,y[X]),setTimeout(function(){S=!1},50)},i))}),k={start:function(t){var n=t.touches?t.touches[0]:t;if(!S){if(S=!0,N={x:n.pageX,y:n.pageY,time:+new Date},e.onSwipeStart&&"stop"===e.onSwipeStart(X,y[X]))return S=!1;A={},Z=!1,s(),w.addEventListener(o.move,k.move,!1),w.addEventListener(o.end,k.end,!1)}},move:function(t){var n,s=t.touches?t.touches[0]:t;if(t.preventDefault(),!Y.touch||!(event.touches.length>1||event.scale&&1!==event.scale))if(A={x:s.pageX-N.x,y:s.pageY-N.y},Z){if(n="X"===e.effect.transform.translate?A.x<0?1:-1:A.y<0?1:-1,L[X]+n>=0&&L[X]+n<=M[X])return;c&&i(A)}else c=Math.abs(A.x)>Math.abs(A.y)?"X":"Y",c=c===e.effect.transform.translate,Z=!0},end:function(s){var i=s.changedTouches?s.changedTouches[0]:s,u=+new Date-N.time,l={},m=0,d=!1;switch(A={x:i.pageX-N.x,y:i.pageY-N.y},l={x:Math.abs(A.x),y:Math.abs(A.y)},e.effect.transform.translate){case"Y":d=+u<250&&l.y>30||l.y>.3*E.Y,m=A.y>0?-1:1;break;case"X":d=+u<250&&l.x>30||l.x>.3*E.X,m=A.x>0?-1:1;break;default:d=+u<350&&l.y+l.x>50||l.y>.3*E.Y||l.x>.3*E.X,m=l.x>l.y?A.x>0?-1:1:A.y>0?-1:1}d&&c&&f(m)&&(e.continuous!==!1||(t||m!==-1)&&(n||1!==m))?e.beforeChange&&"stop"===e.beforeChange(X,y[X])?(t&&a(t,-1),n&&a(n,1)):m===-1?r(t,-1):r(n,1):(t&&a(t,-1),n&&a(n,1)),w.removeEventListener(o.move,k.move,!1),w.removeEventListener(o.end,k.end,!1)}},w.addEventListener(o.start,k.start,!1))}();break;case t.indexOf("nav:")!==-1:!function(){var e,n,a,r=t.split(":")[1],i=document.getElementById(r);if(s=i.children,e=s.length,a=s[X].className,i&&s){for(;e--;)s[e].setAttribute("data-page",e);a.indexOf("active")===-1&&(s[X].className=""===a?"active":a+" active"),n=function(e){var t;for(e=e||window.event,e=e.target||e.srcElement,t=e.tagName.toLowerCase();"li"!==t;){if("ul"===t)return;e=e.parentNode,t=e.tagName.toLowerCase()}h(+e.getAttribute("data-page"),1)},m(i,n,1)}}()}}(N[n]);return{thisPage:function(){return X},go:function(e){h(e)},next:function(){h(X+1)},prev:function(){h(X-1)}}}}
+'use strict';
+
+/* 
+ * rusherwang
+ * rusherwang@tencent.com
+ * create: 2014.4.2
+ * update: 2016.6.22
+ * Github: https://github.com/powy1993/fullpage
+ */
+
+function FullPage(options) {
+
+	"use strict";
+
+	var pageContain = document.getElementById(options.id),
+	    page = pageContain.children,
+	    pagelen = page.length,
+	    iPage = pagelen,
+	    sTime = options.slideTime || 800,
+	    effect = options.effect || {},
+	    indexNow = options.start || 0,
+	    browser = {},
+	    pageRange = {},
+	    cubicCurve = {},
+	    pageStyle = [],
+	    stepArr = [],
+	    stepNow = [],
+	    mode = [],
+	    modeLen,
+	    navChildren,
+	    SPACE = ' ',
+	    _interval = null,
+	    _isLocked = false,
+	    _isNav = false,
+	    _curve,
+	    _t,
+	    _fix,
+	    init,
+	    setCubic,
+	    trans,
+	    resetAndRun,
+	    checkStep,
+	    onTap,
+	    resetStep,
+	    replaceClass,
+	    roundPage,
+	    goPage,
+	    navChange,
+	    wheelScroll;
+
+	if (!page || pagelen === 1) return;
+	if (options.mode) {
+		_isNav = options.mode.indexOf('nav:') !== -1;
+		mode = options.mode.split(',');
+		modeLen = mode.length;
+	}
+	for (_t = 0; _t < pagelen; _t++) {
+		pageStyle.push(page[_t].style);
+		stepArr.push(+page[_t].getAttribute('data-step') || 0);
+		stepNow.push(0);
+	}
+
+	browser = {
+
+		addEventListener: !!window.addEventListener,
+		gravity: !!window.DeviceOrientationEvent,
+		touch: 'ontouchstart' in window || window.DocumentTouch && document instanceof DocumentTouch,
+
+		version: function () {
+
+			var u = navigator.userAgent,
+			    matchVersion = u.indexOf('Android'),
+			    num;
+
+			_fix = u.indexOf('QQBrowser') !== -1 ? 200 : 0;
+
+			if (matchVersion !== -1) {
+				num = u.substring(matchVersion + 7, matchVersion + 11).replace(' ', '');
+			}
+			return num || 0; //0: not Android device
+		}(),
+
+		cssCore: function (testCss) {
+
+			switch (true) {
+				case testCss.webkitTransition === '':
+					return 'webkit';break;
+				case testCss.MozTransition === '':
+					return 'Moz';break;
+				case testCss.msTransition === '':
+					return 'ms';break;
+				case testCss.OTransition === '':
+					return 'O';break;
+				default:
+					return '';
+			}
+		}(document.createElement('Chriswang').style)
+	};
+
+	function UnitBezier(p1x, p1y, p2x, p2y) {
+		// pre-calculate the polynomial coefficients
+		// First and last control points are implied to be (0,0) and (1.0, 1.0)
+		this.cx = 3.0 * p1x;
+		this.bx = 3.0 * (p2x - p1x) - this.cx;
+		this.ax = 1.0 - this.cx - this.bx;
+
+		this.cy = 3.0 * p1y;
+		this.by = 3.0 * (p2y - p1y) - this.cy;
+		this.ay = 1.0 - this.cy - this.by;
+	}
+
+	UnitBezier.prototype = {
+		epsilon: 1e-2, // Precision  
+		sampleCurveX: function sampleCurveX(t) {
+			return ((this.ax * t + this.bx) * t + this.cx) * t;
+		},
+		sampleCurveY: function sampleCurveY(t) {
+			return ((this.ay * t + this.by) * t + this.cy) * t;
+		},
+		sampleCurveDerivativeX: function sampleCurveDerivativeX(t) {
+			return (3.0 * this.ax * t + 2.0 * this.bx) * t + this.cx;
+		},
+		solveCurveX: function solveCurveX(x, epsilon) {
+			var t0, t1, t2, x2, d2, i;
+
+			// First try a few iterations of Newton's method -- normally very fast.
+			for (t2 = x, i = 0; i < 8; i++) {
+				x2 = this.sampleCurveX(t2) - x;
+				if (Math.abs(x2) < epsilon) return t2;
+				d2 = this.sampleCurveDerivativeX(t2);
+				if (Math.abs(d2) < epsilon) break;
+				t2 = t2 - x2 / d2;
+			}
+
+			// No solution found - use bi-section
+			t0 = 0.0;
+			t1 = 1.0;
+			t2 = x;
+
+			if (t2 < t0) return t0;
+			if (t2 > t1) return t1;
+
+			while (t0 < t1) {
+				x2 = this.sampleCurveX(t2);
+				if (Math.abs(x2 - x) < epsilon) return t2;
+				if (x > x2) t0 = t2;else t1 = t2;
+
+				t2 = (t1 - t0) * .5 + t0;
+			}
+
+			// Give up
+			return t2;
+		},
+
+		// Find new T as a function of Y along curve X
+		solve: function solve(x, epsilon) {
+			return this.sampleCurveY(this.solveCurveX(x, epsilon));
+		}
+	};
+
+	init = function init() {
+
+		var i = pagelen;
+
+		pageRange = {
+			X: document.documentElement.clientWidth || window.innerWidth,
+			Y: document.documentElement.clientHeight || window.innerHeight
+		};
+
+		pageContain.style.height = pageRange.Y + 'px';
+	};
+
+	setCubic = function setCubic(a, b, c, d) {
+
+		cubicCurve.A = a;
+		cubicCurve.B = b;
+		cubicCurve.C = c;
+		cubicCurve.D = d;
+	};
+
+	if (typeof options.easing === 'string') {
+
+		switch (options.easing) {
+
+			case 'ease':
+				setCubic(0.25, 0.1, 0.25, 1);
+				break;
+
+			case 'linear':
+				setCubic(0, 0, 1, 1);
+				break;
+
+			case 'ease-in':
+				setCubic(0.42, 0, 1, 1);
+				break;
+
+			case 'ease-out':
+				setCubic(0, 0, 0.58, 1);
+				break;
+
+			case 'ease-in-out':
+				setCubic(0.42, 0, 0.58, 1);
+				break;
+		}
+	} else {
+		setCubic(options.easing[0], options.easing[1], options.easing[2], options.easing[3]);
+	}
+
+	if (browser.cssCore !== '') {
+
+		while (iPage--) {
+
+			pageStyle[iPage][browser.cssCore + 'TransitionTimingFunction'] = 'cubic-bezier(' + cubicCurve.A + ',' + cubicCurve.B + ',' + cubicCurve.C + ',' + cubicCurve.D + ')';
+		}
+
+		trans = function trans(o, x, y, t) {
+
+			var s = o.style,
+			    c = 'translate(' + x + 'px,' + y + 'px) translateZ(0)',
+			    a = arguments[4];
+
+			if (a.scale) {
+				c += t === 0 ? ' scale(' + a.scale[0] + ')' : ' scale(' + a.scale[1] + ')';
+			}
+
+			if (a.rotate) {
+				c += t === 0 ? ' rotate(' + a.rotate[0] + 'deg)' : ' rotate(' + a.rotate[1] + 'deg)';
+			}
+			s[browser.cssCore + 'TransformOrigin'] = '50% 50%';
+			s[browser.cssCore + 'Transform'] = c;
+		};
+	} else {
+		// simulate translate for ie9- 
+		// Cubic-bezier : Fn(t) = (3p1-3p2+1)t^3+(3p2-6p1)t^2-3p1t.
+		_curve = new UnitBezier(cubicCurve.A, cubicCurve.B, cubicCurve.C, cubicCurve.D);
+
+		trans = function trans(o, x, y, t) {
+
+			var cs = o.currentStyle,
+			    s = o.style,
+			    cx = parseInt(s.left || cs.left, 10),
+			    cy = parseInt(s.top || cs.top, 10),
+			    dx = x - cx,
+			    dy = y - cy,
+			    ft = +new Date(),
+			    end = ft + t,
+			    pos = 0,
+			    e = effect.opacity,
+			    diff;
+
+			clearInterval(_interval);
+
+			_interval = setInterval(function () {
+
+				var _t;
+
+				if (+new Date() > end) {
+
+					_t = e ? 'left:' + x + 'px;top:' + y + 'px;filter:alpha(opacity=' + 100 * e[1] + ');' : 'left:' + x + 'px;top:' + y + 'px;';
+
+					clearInterval(_interval);
+				} else {
+					diff = end - new Date();
+					pos = diff / t;
+					// fix to cubic-bezier
+					pos = _curve.solve(1 - pos, UnitBezier.prototype.epsilon);
+
+					_t = 'left:' + (cx + dx * pos) + 'px;top:' + (cy + dy * pos) + 'px;';
+					if (e) {
+						_t += 'filter:alpha(opacity=' + ~~(100 * (e[1] * pos - e[0] * (1 - pos))) + ');';
+					}
+				}
+				s.cssText = _t;
+			}, 13);
+		};
+	}
+
+	resetAndRun = {
+		transform: function transform(o, from, to) {
+
+			var rangeNow = 0,
+			    fix = browser.cssCore === '' && (o['translate'] === 'none' || !o.translate) ? -50 : _fix;
+
+			switch (o['translate']) {
+				case 'Y':
+					rangeNow = to > from ? pageRange.Y : -pageRange.Y;
+					trans(page[to], 0, rangeNow, 0, o);
+					break;
+
+				case 'X':
+					rangeNow = to > from ? pageRange.X : -pageRange.X;
+					trans(page[to], rangeNow, 0, 0, o);
+					break;
+
+				case 'XY':
+					rangeNow = {
+						X: to > from ? pageRange.X : -pageRange.X,
+						Y: to > from ? pageRange.Y : -pageRange.Y
+					};
+					trans(page[to], rangeNow.X, rangeNow.Y, 0, o);
+					break;
+
+				default:
+					trans(page[to], 0, 0, 0, o);
+					break;
+			}
+			setTimeout(function () {
+				trans(page[to], 0, 0, sTime, o);
+			}, fix + 50);
+		},
+		opacity: function opacity(o, from, to) {
+			var s = page[to].style;
+
+			s.opacity = o[0];
+			setTimeout(function () {
+				s.opacity = o[1];
+			}, 70);
+		}
+	};
+
+	if (browser.addEventListener && browser.touch) {
+		if (navigator.userAgent.indexOf('Firefox')) {
+			onTap = function onTap(o, fn) {
+				o.addEventListener('click', fn, false);
+			};
+		} else {
+			onTap = function onTap(o, fn) {
+				o.addEventListener('touchstart', fn, false);
+				if (arguments[2]) {
+					// if we touch on navBar we should stop scroll
+					o.addEventListener('touchmove', function (e) {
+						e.preventDefault();
+					}, false);
+				}
+			};
+		}
+	} else {
+		onTap = function onTap(o, fn) {
+			o.onclick = fn;
+		};
+	}
+
+	replaceClass = function replaceClass(o, cls, tocls) {
+
+		var oN = o.className,
+		    arr = [],
+		    len;
+
+		if (oN.indexOf(cls) !== -1) {
+
+			arr = oN.split(SPACE);
+			len = arr.length;
+			while (len--) {
+				if (arr[len] === cls) {
+					if (tocls === SPACE || tocls === '') {
+						arr.splice(len, 1);
+					} else {
+						arr[len] = tocls;
+					}
+				}
+			}
+			if (arr.length) {
+				o.className = arr.join(SPACE);
+			} else {
+				o.removeAttribute('class');
+				o.removeAttribute('className');
+			}
+		}
+	};
+
+	if (_isNav) {
+		navChange = function navChange(from, to) {
+			var t = navChildren[to].className;
+
+			replaceClass(navChildren[from], 'active', SPACE);
+			navChildren[to].className = t === '' ? 'active' : t + ' active';
+		};
+	}
+
+	if (options.continuous) {
+		roundPage = function roundPage(page) {
+			var i = pagelen;
+
+			if (arguments[1]) {
+				if (page >= pagelen) {
+					while (i--) {
+						stepNow[i] = 0;
+					}
+				} else if (page < 0) {
+					while (i--) {
+						stepNow[i] = stepArr[i];
+					}
+				}
+			}
+
+			return (pagelen + page % pagelen) % pagelen;
+		};
+	}
+
+	checkStep = function checkStep(direct) {
+		var oldStep = stepNow[indexNow],
+		    newStep = oldStep + direct;
+
+		if (newStep >= 0 && newStep <= stepArr[indexNow]) {
+			if (newStep === 0) {
+				replaceClass(page[indexNow], 'step1', '');
+				stepNow[indexNow] = newStep;
+				return false;
+			}
+			if (newStep === 1 && oldStep === 0) {
+				page[indexNow].className += ' step1';
+				stepNow[indexNow] = newStep;
+				return false;
+			}
+			replaceClass(page[indexNow], 'step' + oldStep, 'step' + newStep);
+			stepNow[indexNow] = newStep;
+			return false;
+		}
+		return true;
+	};
+
+	resetStep = function resetStep() {
+		var stepTo = page[indexNow].getAttribute('data-step-restart');
+		if (stepTo == null) return;
+
+		stepTo = +stepTo > stepArr[indexNow] ? stepArr[indexNow] : +stepTo;
+		if (stepTo === 0) {
+			replaceClass(page[indexNow], 'step' + stepNow[indexNow], '');
+		} else {
+			replaceClass(page[indexNow], 'step' + stepNow[indexNow], 'step' + stepTo);
+		}
+		stepNow[indexNow] = stepTo;
+	};
+
+	goPage = function goPage(to) {
+
+		var isMac = function (ua) {
+			return ua.indexOf('Mac OS') !== -1;
+		}(navigator.userAgent),
+		    fix = _fix,
+		    indexOld,
+		    _effectNow;
+
+		if (options.beforeChange) {
+			if (options.beforeChange(indexNow, page[indexNow]) === 'stop') {
+				return;
+			}
+		}
+
+		if (_isLocked // make sure translate is already
+		|| to === indexNow) return; // don't translate if thispage
+
+		if (options.continuous) {
+			to = roundPage(to, 1);
+		} else {
+			if (to >= pagelen && stepNow[indexNow] >= stepArr[indexNow] || to < 0 && stepNow[indexNow] === 0) return;
+		}
+
+		_isLocked = true;
+
+		if (!arguments[1] && !checkStep(to - indexNow)) {
+			return setTimeout(function () {
+				_isLocked = false;
+			}, sTime);
+		}
+
+		for (_effectNow in effect) {
+			resetAndRun[_effectNow](effect[_effectNow], indexNow, to);
+		}
+
+		fix += browser.cssCore === '' ? 20 : 0;
+		indexOld = indexNow;
+		indexNow = to;
+		if (_isNav) navChange(indexOld, indexNow);
+		setTimeout(function () {
+			// fix for bug in ie6-9 about z-index
+			page[to].className += ' slide';
+		}, fix);
+
+		setTimeout(function () {
+
+			pageStyle[to][browser.cssCore + 'TransitionDuration'] = sTime + 'ms';
+		}, 20);
+
+		setTimeout(function () {
+
+			resetStep();
+			replaceClass(page[indexOld], 'current', '');
+			replaceClass(page[indexNow], 'slide', 'current');
+
+			if (options.callback) {
+				options.callback(indexNow, page[indexNow]);
+			}
+			if (isMac) {
+				// Mac电脑多延迟500ms 防止鼠标滚轮事件不断触发导致多翻一页
+				setTimeout(function () {
+					_isLocked = false;
+				}, 500);
+			} else {
+				_isLocked = false;
+			}
+		}, sTime + _fix + 120);
+	};
+
+	init();
+	// Tag first page
+	_t = page[indexNow].className;
+	page[indexNow].className = _t.indexOf('current') !== -1 ? _t : _t + ' current';
+
+	if (browser.addEventListener) {
+
+		window.addEventListener('resize', init, false);
+	} else {
+
+		window.onresize = init;
+	}
+	// check mode
+	while (modeLen--) {
+
+		(function (m) {
+
+			switch (true) {
+				case m === 'wheel':
+
+					wheelScroll = function wheelScroll(e) {
+
+						var direct;
+						e = e || window.event;
+						if (e.preventDefault) {
+							e.preventDefault();
+						} else {
+							e.returnValue = false;
+						}
+						if (_isLocked) return;
+						direct = -e.wheelDelta || e.detail;
+						direct = direct < 0 ? -1 : 1;
+
+						goPage(indexNow + direct);
+					};
+					if (browser.addEventListener) {
+						document.addEventListener('DOMMouseScroll', wheelScroll, false);
+					}
+					window.onmousewheel = document.onmousewheel = wheelScroll;
+					break;
+
+				case m === 'touch':
+					if (!browser.addEventListener) break;
+					(function () {
+
+						var pageIndexMax = pagelen - 1,
+						    scaleStart = effect.transform.scale[0],
+						    scaleDiff = effect.transform.scale[1] - scaleStart,
+						    rotateStart = effect.transform.rotate[0],
+						    rotateDiff = effect.transform.rotate[1] - rotateStart,
+						    opacityStart = effect.opacity[0],
+						    opacityDiff = effect.opacity[1] - opacityStart,
+						    touchEvent = {},
+						    _start = {},
+						    delta = {},
+						    isValidMove = false,
+						    isWindowsPhone = navigator.userAgent.indexOf('Windows Phone') === -1 ? false : true,
+						    prev,
+						    next,
+						    setIndex,
+						    reset,
+						    validReset,
+						    _move,
+						    _interval,
+						    _touch,
+						    _t;
+
+						if (!browser.touch && isWindowsPhone) {
+							if (window.navigator.msPointerEnabled) {
+								_touch = {
+									start: 'MSPointerDown',
+									move: 'MSPointerMove',
+									end: 'MSPointerUp'
+								};
+							} else {
+								_touch = {
+									start: 'pointerDown',
+									move: 'pointerMove',
+									end: 'pointerUp'
+								};
+							}
+						} else {
+							_touch = {
+								start: 'touchstart',
+								move: 'touchmove',
+								end: 'touchend'
+							};
+						}
+
+						if (!_touch) return;
+						document.body.ontouchmove = function (e) {
+							if (e.preventDefault) {
+								e.preventDefault();
+							} else {
+								e.returnValue = false;
+							}
+						};
+
+						if (effect.transform.translate === 'Y') {
+							setIndex = function setIndex() {
+								var pr = indexNow - 1,
+								    ne = indexNow + 1;
+
+								if (options.continuous) {
+									pr = roundPage(pr);
+									ne = roundPage(ne);
+								}
+								prev = pageStyle[pr];
+								next = pageStyle[ne];
+
+								if (prev) {
+									prev[browser.cssCore + 'TransitionDuration'] = '0ms';
+									prev[browser.cssCore + 'Transform'] = 'translate(0,-' + pageRange.Y + 'px) translateZ(0)';
+									prev[browser.cssCore + 'TransformOrigin'] = '50% 100%';
+									page[pr].className += ' swipe';
+								}
+								if (next) {
+									next[browser.cssCore + 'TransitionDuration'] = '0ms';
+									next[browser.cssCore + 'Transform'] = 'translate(0,' + pageRange.Y + 'px) translateZ(0)';
+									next[browser.cssCore + 'TransformOrigin'] = '50% 0%';
+									page[ne].className += ' swipe';
+								}
+							};
+							_move = function move(o) {
+
+								var pos = Math.abs(o.y / pageRange.Y),
+								    _t = ' scale(' + ~~(100 * (scaleStart + scaleDiff * pos)) / 100 + ') rotate(' + ~~(rotateStart + rotateDiff * pos) + 'deg)';
+
+								if (prev && o.y > 0) {
+									prev.opacity = ~~(100 * (opacityStart + opacityDiff * pos)) / 100;
+									prev[browser.cssCore + 'Transform'] = 'translate(0,' + ~~(o.y - pageRange.Y) + 'px) translateZ(0)' + _t;
+								}
+								if (next && o.y < 0) {
+									next.opacity = ~~(100 * (opacityStart + opacityDiff * pos)) / 100;
+									next[browser.cssCore + 'Transform'] = 'translate(0,' + ~~(pageRange.Y + o.y) + 'px) translateZ(0)' + _t;
+								}
+							};
+							reset = function reset(s, n) {
+
+								var _t = sTime >> 1,
+								    ne = indexNow + n;
+
+								if (options.continuous) {
+									ne = roundPage(ne);
+								}
+								replaceClass(page[ne], 'swipe', 'slide');
+								s.opacity = 1;
+								s[browser.cssCore + 'TransitionDuration'] = _t + 'ms';
+								s[browser.cssCore + 'Transform'] = 'translate(0,' + n * pageRange.Y + 'px) translateZ(0)';
+								setTimeout(function () {
+									replaceClass(page[ne], 'slide', '');
+									setTimeout(function () {
+										_isLocked = false;
+									}, 50);
+								}, _t);
+							};
+							validReset = function validReset(s, n) {
+
+								var to = indexNow + n,
+								    _t = ~~(sTime / 1.5),
+								    _o,
+								    _f;
+
+								if (options.continuous) {
+									to = roundPage(to);
+									_o = page[roundPage(indexNow - n)];
+									_f = true;
+								} else {
+									_o = page[indexNow - n];
+								}
+
+								if (_o) {
+									replaceClass(_o, 'swipe', '');
+								}
+								if (!_f && to < 0 || to > pagelen - 1) {
+									setTimeout(function () {
+										_isLocked = false;
+									}, 50);
+									return;
+								}
+
+								if (_isNav) {
+									navChange(indexNow, to);
+								}
+
+								s.opacity = 1;
+								replaceClass(page[to], 'swipe', 'slide');
+								s[browser.cssCore + 'TransitionDuration'] = _t + 'ms';
+								s[browser.cssCore + 'Transform'] = 'translate(0,0) translateZ(0)';
+								setTimeout(function () {
+									resetStep();
+									replaceClass(page[indexNow], 'current', '');
+									replaceClass(page[to], 'slide', 'current');
+									indexNow = to;
+									if (options.callback) {
+										options.callback(indexNow, page[indexNow]);
+									}
+									setTimeout(function () {
+										_isLocked = false;
+									}, 50);
+								}, _t);
+							};
+						} else {
+							setIndex = function setIndex() {
+
+								var pr = indexNow - 1,
+								    ne = indexNow + 1;
+
+								if (options.continuous) {
+									pr = roundPage(pr);
+									ne = roundPage(ne);
+								}
+								prev = pageStyle[pr];
+								next = pageStyle[ne];
+
+								if (prev) {
+									prev[browser.cssCore + 'TransitionDuration'] = '0ms';
+									prev[browser.cssCore + 'Transform'] = 'translate(-' + pageRange.X + 'px,0) translateZ(0)';
+									prev[browser.cssCore + 'TransformOrigin'] = '100% 50%';
+									page[pr].className += ' swipe';
+								}
+								if (next) {
+									next[browser.cssCore + 'TransitionDuration'] = '0ms';
+									next[browser.cssCore + 'Transform'] = 'translate(' + pageRange.X + 'px,0) translateZ(0)';
+									next[browser.cssCore + 'TransformOrigin'] = '0 50%';
+									page[ne].className += ' swipe';
+								}
+							};
+							_move = function move(o) {
+
+								var pos = Math.abs(o.x / pageRange.X),
+								    _t = ' scale(' + ~~(100 * (scaleStart + scaleDiff * pos)) / 100 + ') rotate(' + ~~(rotateStart + rotateDiff * pos) + 'deg)';
+
+								if (prev && o.x > 0) {
+									prev.opacity = ~~(100 * (opacityStart + opacityDiff * pos)) / 100;
+									prev[browser.cssCore + 'Transform'] = 'translate(' + ~~(o.x - pageRange.X) + 'px,0) translateZ(0)' + _t;
+								}
+								if (next && o.x < 0) {
+									next.opacity = ~~(100 * (opacityStart + opacityDiff * pos)) / 100;
+									next[browser.cssCore + 'Transform'] = 'translate(' + ~~(pageRange.X + o.x) + 'px,0) translateZ(0)' + _t;
+								}
+							};
+							reset = function reset(s, n) {
+
+								var _t = sTime >> 1,
+								    ne = indexNow + n;
+
+								if (options.continuous) {
+									ne = roundPage(ne);
+								}
+								replaceClass(page[ne], 'swipe', 'slide');
+
+								s.opacity = 1;
+								s[browser.cssCore + 'TransitionDuration'] = _t + 'ms';
+								s[browser.cssCore + 'Transform'] = 'translate(' + n * pageRange.X + 'px,0) translateZ(0)';
+								setTimeout(function () {
+									replaceClass(page[ne], 'slide', '');
+									setTimeout(function () {
+										_isLocked = false;
+									}, 50);
+								}, _t);
+							};
+							validReset = function validReset(s, n) {
+
+								var to = indexNow + n,
+								    _t = ~~(sTime / 1.5),
+								    _o,
+								    _f;
+
+								if (options.continuous) {
+									to = roundPage(to);
+									_o = page[roundPage(indexNow - n)];
+									_f = true;
+								} else {
+									_o = page[indexNow - n];
+								}
+
+								if (_o) {
+									replaceClass(_o, 'swipe', '');
+								}
+								if (!_f && to < 0 || to > pagelen - 1) {
+									setTimeout(function () {
+										_isLocked = false;
+									}, 50);
+									return;
+								}
+
+								if (_isNav) {
+									navChange(indexNow, to);
+								}
+
+								replaceClass(page[to], 'swipe', 'slide');
+								s.opacity = 1;
+								s[browser.cssCore + 'TransitionDuration'] = _t + 'ms';
+								s[browser.cssCore + 'Transform'] = 'translate(0,0) translateZ(0)';
+								setTimeout(function () {
+									resetStep();
+									replaceClass(page[indexNow], 'current', '');
+									replaceClass(page[to], 'slide', 'current');
+									indexNow = to;
+									if (options.callback) {
+										options.callback(indexNow, page[indexNow]);
+									}
+									setTimeout(function () {
+										_isLocked = false;
+									}, 50);
+								}, _t);
+							};
+						}
+
+						touchEvent = {
+							start: function start(e) {
+
+								var touches = e.touches ? e.touches[0] : e;
+
+								if (_isLocked) return;
+								_isLocked = true;
+
+								_start = {
+									x: touches.pageX,
+									y: touches.pageY,
+									time: +new Date()
+								};
+
+								if (options.onSwipeStart && options.onSwipeStart(indexNow, page[indexNow]) === 'stop') {
+									return _isLocked = false;
+								}
+								// reset
+								delta = {};
+								isValidMove = false;
+
+								setIndex();
+
+								pageContain.addEventListener(_touch.move, touchEvent.move, false);
+								pageContain.addEventListener(_touch.end, touchEvent.end, false);
+							},
+							move: function move(e) {
+
+								var touches = e.touches ? e.touches[0] : e,
+								    direct;
+
+								e.preventDefault();
+								// ensure swiping with one touch and not pinching
+								if (browser.touch && (event.touches.length > 1 || event.scale && event.scale !== 1)) return;
+
+								delta = {
+									x: touches.pageX - _start.x,
+									y: touches.pageY - _start.y
+								};
+
+								if (!isValidMove) {
+									_t = Math.abs(delta.x) > Math.abs(delta.y) ? 'X' : 'Y';
+									_t = _t === options.effect.transform['translate'] ? true : false;
+									isValidMove = true;
+								} else {
+									if (options.effect.transform['translate'] === 'X') {
+										direct = delta.x < 0 ? 1 : -1;
+									} else {
+										direct = delta.y < 0 ? 1 : -1;
+									}
+									if (stepNow[indexNow] + direct >= 0 && stepNow[indexNow] + direct <= stepArr[indexNow]) return;
+									if (_t) _move(delta);
+								}
+							},
+							end: function end(e) {
+
+								var touches = e.changedTouches ? e.changedTouches[0] : e,
+								    duration = +new Date() - _start.time,
+								    abs = {},
+								    nextDiff = 0,
+								    isValidSlide = false;
+
+								delta = {
+									x: touches.pageX - _start.x,
+									y: touches.pageY - _start.y
+								};
+								abs = {
+									x: Math.abs(delta.x),
+									y: Math.abs(delta.y)
+								};
+
+								switch (options.effect.transform['translate']) {
+									case 'Y':
+										isValidSlide = +duration < 250 && abs.y > 30 || abs.y > pageRange.Y * .3;
+										nextDiff = delta.y > 0 ? -1 : 1;
+										break;
+
+									case 'X':
+										isValidSlide = +duration < 250 && abs.x > 30 || abs.x > pageRange.X * .3;
+										nextDiff = delta.x > 0 ? -1 : 1;
+										break;
+
+									default:
+										isValidSlide = +duration < 350 && abs.y + abs.x > 50 || abs.y > pageRange.Y * .3 || abs.x > pageRange.X * .3;
+										nextDiff = abs.x > abs.y ? delta.x > 0 ? -1 : 1 : delta.y > 0 ? -1 : 1;
+										break;
+								}
+
+								if (!isValidSlide || !_t || !checkStep(nextDiff) || options.continuous === false && (!prev && nextDiff === -1 || !next && nextDiff === 1)) {
+									if (prev) reset(prev, -1);
+									if (next) reset(next, +1);
+								} else if (options.beforeChange && options.beforeChange(indexNow, page[indexNow]) === 'stop') {
+									if (prev) reset(prev, -1);
+									if (next) reset(next, +1);
+								} else if (nextDiff === -1) {
+									validReset(prev, -1);
+								} else {
+									validReset(next, 1);
+								}
+								pageContain.removeEventListener(_touch.move, touchEvent.move, false);
+								pageContain.removeEventListener(_touch.end, touchEvent.end, false);
+							}
+
+						};
+
+						pageContain.addEventListener(_touch.start, touchEvent.start, false);
+					})();
+					break;
+
+				case m.indexOf('nav:') !== -1:
+					(function () {
+
+						var navId = m.split(':')[1],
+						    navObj = document.getElementById(navId),
+						    navLen,
+						    gotoPage,
+						    _t;
+
+						navChildren = navObj.children;
+						navLen = navChildren.length;
+						_t = navChildren[indexNow].className;
+
+						if (!navObj || !navChildren) return;
+
+						while (navLen--) {
+							// set attr for finding specific page
+							navChildren[navLen].setAttribute('data-page', navLen);
+						}
+						if (_t.indexOf('active') === -1) {
+							navChildren[indexNow].className = _t === '' ? 'active' : _t + ' active';
+						}
+
+						gotoPage = function gotoPage(e) {
+
+							var t;
+							e = e || window.event;
+							e = e.target || e.srcElement;
+
+							t = e.tagName.toLowerCase();
+
+							while (t !== 'li') {
+								if (t === 'ul') return;
+								e = e.parentNode;
+								t = e.tagName.toLowerCase();
+							}
+
+							goPage(+e.getAttribute('data-page'), 1);
+						};
+						// bind event to navObj
+						onTap(navObj, gotoPage, 1);
+					})();
+			}
+		})(mode[modeLen]);
+	}
+
+	return {
+		thisPage: function thisPage() {
+			return indexNow;
+		},
+		go: function go(num) {
+			goPage(num);
+		},
+		next: function next() {
+			goPage(indexNow + 1);
+		},
+		prev: function prev() {
+			goPage(indexNow - 1);
+		}
+	};
+}
 //# sourceMappingURL=fullPage.js.map
