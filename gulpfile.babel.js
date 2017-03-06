@@ -81,7 +81,7 @@ gulp.task('build', ['styles', 'scripts', 'images', 'fonts'], () => {
     return gulp.src('dist/**/*')
         .pipe($.if('*.js', $.uglify()))
         .pipe($.if('*.css', $.cssnano()))
-        .pipe(rev()) //为引用添加版本号4
+        //.pipe(rev()) //为引用添加版本号4
         .pipe($.if('*.html', $.htmlmin(options)))
         .pipe(gulp.dest('dist'))
 });
